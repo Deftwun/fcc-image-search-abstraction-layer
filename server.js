@@ -1,16 +1,30 @@
-var express = require("express");
-var app = express();
 "use strict";
 
-var port = process.env.PORT || 8080;
+require("./env.js");
 
-app.use("/",express.static("client"));
+var http = require("http");
 
-app.get("/:query",function(req,res){
+var query = "what",
+    span = "all", //day,week,month,year,all
+    sort = "top", //top,viral,time
+    page = "0";
+    
+var options = {
+  host: 'api.imgur.com',
+  path: ["3/gallery/search",sort,span,page + "?q=" + query].join("/"),
+  headers: {"Authorization" : "Client-ID " + process.env.CLIENT_ID}
+};
 
-});
+var callback = function(response) {
+  var str = ''
+  response.on('data', function (chunk) {
+    str += chunk;
+  });
 
-app.listen(port, function () {
-console.log('url-shortener running on port ' + port);
-});
-  
+  response.on('end', function () {
+    console.log(str);
+  });
+}
+
+var req = http.request(options, callback);
+req.end();
