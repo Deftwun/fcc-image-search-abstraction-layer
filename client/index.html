@@ -9,15 +9,21 @@
   
   <body style="margin:15px">
     
-    <h1 class="page-header">fcc-image-search-abstraction-layer</h1>
+    <h1 class="page-header">Imgur Image Search Abstraction API</h1>
 
-    <script>
-      //Use the correct domain/host name in document.
-      var spans = document.querySelectorAll(".host-name");
-      for (var i in spans){
-        spans[i].innerHTML = location.host;
-      }
-    </script>
+    <!--Search Form-->
+    <form class="form-inline" action="search" method="GET">
+      <div class="form-group">
+        <label for="search">Search Term</label>
+        <input type="text" class="form-control" name="q" id="search" placeholder="lol cats">
+      </div>
+      <div class="form-group">
+        <label for="search">Page Number</label>
+        <input type="text" class="form-control" name="offset" id="page-num" placeholder="0">
+      </div>
+      <button type="submit" class="btn btn-default">Search</button>
+    </form>
+    
   </body>
   
 </html>
