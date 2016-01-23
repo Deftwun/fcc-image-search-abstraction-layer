@@ -1,30 +1,21 @@
 "use strict";
 
-require("./env.js");
+var express = require("express"),
+    app = express();
 
-var http = require("http");
-
-var query = "what",
-    span = "all", //day,week,month,year,all
-    sort = "top", //top,viral,time
-    page = "0";
+var port = process.env.PORT || 8080;
     
-var options = {
-  host: 'api.imgur.com',
-  path: ["3/gallery/search",sort,span,page + "?q=" + query].join("/"),
-  headers: {"Authorization" : "Client-ID " + process.env.CLIENT_ID}
-};
+//app.use("/",express.static("client"));
 
-var callback = function(response) {
-  var str = ''
-  response.on('data', function (chunk) {
-    str += chunk;
-  });
+app.use("/",express.static("client"));
 
-  response.on('end', function () {
-    console.log(str);
-  });
-}
+app.get("/search/:str",function(req,res){
+  var searchString = req.params.str,
+      page = req.query.offset;
+      
+  console.log(searchString + " : " + page);
+});
 
-var req = http.request(options, callback);
-req.end();
+app.listen(port, function () {
+  console.log('Running on port # ' + port);
+});
