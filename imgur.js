@@ -6,13 +6,14 @@ module.exports = {
   search : function (searchString,callback,opt){
     
     if (!opt) opt={};
-    opt.time = opt.time | "all";
-    opt.sort = opt.sort | "top";
-    opt.page = opt.page | "0";
+    opt.time = opt.time || "all";
+    opt.sort = opt.sort || "top";
+    opt.page = opt.page || "0";
     
     var https = require("https");
     
     var options = {
+      protocol:"https:",
       host: 'api.imgur.com',
       path: ["3/gallery/search",opt.sort,opt.time,opt.page+"?="+searchString].join("/"),
       headers: {"Authorization" : "Client-ID " + process.env.CLIENT_ID}
