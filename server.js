@@ -12,7 +12,7 @@ app.get("/search/:str",function(req,res){
       page = req.query.offset;
   
   var imgur = require("./imgur.js");
-  imgur.search("what",function(result){
+  imgur.search(searchString,function(result){
     res.end(result);
   });
 });
