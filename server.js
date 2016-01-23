@@ -7,8 +7,8 @@ var port = process.env.PORT || 8080;
 
 app.use("/",express.static("client"));
 
-app.get("/search/:str",function(req,res){
-  var searchString = req.params.str,
+app.get("/search",function(req,res){
+  var searchString = req.query.q,
       page = req.query.offset;
   
   var imgur = require("./imgur.js");
