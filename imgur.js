@@ -11,14 +11,14 @@ module.exports = {
     opt.page = opt.page || "0";
     
     var https = require("https");
-    
+
     var options = {
       protocol:"https:",
       host: 'api.imgur.com',
-      path: ["3/gallery/search",opt.sort,opt.time,opt.page+"?="+searchString].join("/"),
+      path: ["/3/gallery/search",opt.sort,opt.time,opt.page+"?q="+searchString].join("/"),
       headers: {"Authorization" : "Client-ID " + process.env.CLIENT_ID}
     };  
-    
+
     var req = https.request(options, function(response) {
       var str = '';
       response.on('data', function (chunk) {
@@ -26,9 +26,10 @@ module.exports = {
       });
       response.on('end', function () {
         callback(str);
+        console.log(str);
       });
     });
-    
+  
     req.end();  
   }
 };
