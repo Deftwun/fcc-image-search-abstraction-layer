@@ -1,7 +1,5 @@
 "use strict";
 
-require("./env.js");
-
 module.exports = {
   search : function (searchString,callback,opt){
     
