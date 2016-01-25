@@ -1,10 +1,5 @@
 "use strict";
 
-<<<<<<< HEAD:imgur.js
-//require("./env.js");
-
-=======
->>>>>>> dev:app/imgur.js
 module.exports = {
   search : function (searchString,callback,opt){
     

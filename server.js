@@ -1,7 +1,5 @@
 "use strict";
 
-//require("./env.js");
-
 var mongo = require('mongodb').MongoClient,
     express = require("express"),
     app = express(),
