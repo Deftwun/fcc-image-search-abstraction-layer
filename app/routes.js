@@ -15,7 +15,8 @@ module.exports = function(app,db){
   });
   
   app.get("/search",function(req,res){
-    var searchString = req.query.q,
+    
+    var searchString = req.query.q.replace(" ","%20"),
         page = req.query.offset;
     
     var imgur = require("./imgur.js");
@@ -23,7 +24,7 @@ module.exports = function(app,db){
       res.end(result);
     });
     
-    controller.newSearch(searchString);
+    controller.newSearch(req.query.q);
   });
 }
 
