@@ -4,9 +4,8 @@ require("./env.js");
 
 var mongo = require('mongodb').MongoClient,
     express = require("express"),
-    app = express();
-
-
+    app = express(),
+    routes = require("./app/routes.js");
 
 mongo.connect(process.env.DB_CONNECT_STRING, function (err, db) {
   
@@ -16,27 +15,7 @@ mongo.connect(process.env.DB_CONNECT_STRING, function (err, db) {
     console.log('MongoDB successfully connected');
   }
   
-  var controller = new (require("./searchController.js"))(db);
-  
-  app.use("/",express.static("client"));
-  
-  app.get("/recent-searches",function(req,res){
-    controller.getSearches(function(data){
-      res.json(data);
-    })
-  });
-  
-  app.get("/search",function(req,res){
-    var searchString = req.query.q,
-        page = req.query.offset;
-    
-    var imgur = require("./imgur.js");
-    imgur.search(searchString,function(result){
-      res.end(result);
-    });
-    
-    controller.newSearch(searchString);
-  });
+  routes(app,db);
   
   var port = process.env.PORT || 8080;
   app.listen(port, function () {

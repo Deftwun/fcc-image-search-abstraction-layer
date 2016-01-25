@@ -15,7 +15,8 @@ function Controller (db) {
     
     var cursor = db.collection("searches")
                     .find({},{_id:0,value:1})
-                    .sort({timestamp:-1});
+                    .sort({timestamp:-1})
+                    .limit(10);
                     
     cursor.each(function(err, doc) {
       
