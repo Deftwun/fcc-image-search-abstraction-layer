@@ -6,6 +6,8 @@ var mongo = require('mongodb').MongoClient,
     express = require("express"),
     app = express();
 
+
+
 mongo.connect(process.env.DB_CONNECT_STRING, function (err, db) {
   
   if (err) {
@@ -14,7 +16,15 @@ mongo.connect(process.env.DB_CONNECT_STRING, function (err, db) {
     console.log('MongoDB successfully connected');
   }
   
+  var controller = new (require("./searchController.js"))(db);
+  
   app.use("/",express.static("client"));
+  
+  app.get("/recent-searches",function(req,res){
+    controller.getSearches(function(data){
+      res.json(data);
+    })
+  });
   
   app.get("/search",function(req,res){
     var searchString = req.query.q,
@@ -25,8 +35,7 @@ mongo.connect(process.env.DB_CONNECT_STRING, function (err, db) {
       res.end(result);
     });
     
-    var searchController = require("./searchController.js");
-    searchController.addSearch(searchString)
+    controller.newSearch(searchString);
   });
   
   var port = process.env.PORT || 8080;
